@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba de Notificación FCM</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; }
+        form { display: flex; flex-direction: column; }
+        input, textarea { margin-bottom: 10px; padding: 5px; }
+        button { padding: 10px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Prueba de Notificación FCM</h1>
+    <form action="prueba_notificacion.php" method="post">
+        <input type="text" name="token" placeholder="Token del dispositivo" required>
+        <input type="text" name="titulo" placeholder="Título del mensaje" required>
+        <textarea name="mensaje" placeholder="Cuerpo del mensaje" required></textarea>
+        <button type="submit">Enviar Notificación</button>
+    </form>
+    <div id="resultado"></div>
+
+    <script>
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            fetch(this.action, {
+                method: 'POST',
+                body: new FormData(this)
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('resultado').innerHTML = data;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
